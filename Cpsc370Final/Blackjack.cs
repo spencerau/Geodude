@@ -5,23 +5,29 @@ using System.Collections.Generic;
 
 public class Blackjack
 {
-    private static int playerChips = 1000; // Starting chip count
-    private static int currentBet = 0;
+    private static double playerChips = 1000; // Starting chip count
+    private static double currentBet = 0;
+    private Player player;
 
-    public static void TestDeck()
+    public Blackjack(Player player)
+    {
+        this.player = player;
+    }
+
+    public void TestDeck()
 {
     while (true) // Loop for replay functionality
     {
         // Display current chip balance
-        Console.WriteLine("\nYou have " + playerChips + " chips.");
+        Console.WriteLine("\nYou have $" + player.money + ".");
 
         // Ask the player for a bet amount
         Console.WriteLine("Enter your bet amount:");
         string betInput = Console.ReadLine();
-        if (int.TryParse(betInput, out int bet) && bet > 0 && bet <= playerChips)
+        if (double.TryParse(betInput, out double bet) && bet > 0.0 && bet <= playerChips)
         {
             currentBet = bet;
-            playerChips -= currentBet; // Deduct the bet from player's chips
+            player.RemoveMoney(currentBet); // Deduct the bet from player's chips
             Console.WriteLine("You have bet " + currentBet + " chips.");
         }
         else
@@ -59,7 +65,7 @@ public class Blackjack
             if (doubleDownResponse == "yes")
             {
                 currentBet *= 2; // Double the bet
-                playerChips -= currentBet; // Deduct the doubled bet from player's chips
+                player.RemoveMoney(currentBet);
                 Console.WriteLine($"You have doubled your bet. Your new bet is {currentBet} chips.");
                 playerHand.AddCard(deck.Deal()); // Deal one more card to the player
                 Console.WriteLine(playerHand);
@@ -74,7 +80,7 @@ public class Blackjack
             string action = "";
             while (action != "stand" && playerHand.GetTotalValue() < 21)
             {
-                Console.WriteLine("\nYour hand value: " + playerHand.GetTotalValue() + "\tDealer's hand value: " + dealerHand.GetTotalValue());
+                Console.WriteLine("\nYour hand value: " + playerHand.GetTotalValue() + "\tDealer's hand value: " + dealerHand.GetCard(0).GetValue()); // 
                 Console.WriteLine("Would you like to 'hit', 'stand', or 'split'?");
 
                 // Only show split option if the player has a splittable hand
@@ -109,7 +115,7 @@ public class Blackjack
                     // Place a new bet for the second hand
                     Console.WriteLine("\nEnter a new bet for the second hand:");
                     int secondBet = int.Parse(Console.ReadLine());
-                    playerChips -= secondBet;
+                    player.RemoveMoney(secondBet);
                     currentBet = secondBet;
                     // Deal a new card to both hands
                     playerHand.AddCard(deck.Deal());
@@ -177,7 +183,7 @@ public class Blackjack
         }
     }
 
-    private static void DetermineWinner(Hand playerHand, Hand dealerHand)
+    private void DetermineWinner(Hand playerHand, Hand dealerHand)
     {
         Console.WriteLine("\nFinal hands:");
         Console.WriteLine($"Player's hand: {playerHand} (Total: {playerHand.GetTotalValue()})");
@@ -193,12 +199,12 @@ public class Blackjack
         else if (dealerTotal > 21)
         {
             Console.WriteLine("Dealer busts! Player wins.");
-            playerChips += currentBet * 2; // Player wins and gets double the bet
+            player.AddMoney(currentBet, 2); // Player wins and gets double the bet
         }
         else if (playerTotal > dealerTotal)
         {
             Console.WriteLine("Player wins!");
-            playerChips += currentBet * 2; // Player wins and gets double the bet
+            player.AddMoney(currentBet, 2); // Player wins and gets double the bet
         }
         else if (dealerTotal > playerTotal)
         {
@@ -207,10 +213,10 @@ public class Blackjack
         else
         {
             Console.WriteLine("It's a tie!");
-            playerChips += currentBet; // Player gets their bet back
+            player.AddMoney(currentBet, 1); // Player wins and gets double the bet
         }
 
-        Console.WriteLine($"You now have {playerChips} chips.");
+        Console.WriteLine($"You now have ${player.money}.");
     }
 }
 
@@ -236,13 +242,12 @@ public class Hand
         foreach (Card card in cards)
         {
             int value = card.GetValue();
-            if (value > 10) value = 10; // Face cards (Jack, Queen, King) are worth 10
-
             if (value == 14) // Ace, needs special handling
             {
                 aceCount++;
                 value = 11; // Initially count Ace as 11
             }
+            else if (value > 10) value = 10; // Face cards (Jack, Queen, King) are worth 10
 
             totalValue += value;
         }

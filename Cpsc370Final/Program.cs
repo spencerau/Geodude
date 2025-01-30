@@ -23,6 +23,8 @@ class Program
 
                 case "3":
                     Console.WriteLine("You chose Blackjack!");
+                    Blackjack blackjackGame = new Blackjack(gambler);
+                    blackjackGame.TestDeck();
                     break;
 
                 case "4":

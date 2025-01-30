@@ -76,7 +76,7 @@ namespace Cpsc370Final
             {
                 // payoff is 1.1x bet
                 double winnings = BetAmount * 1.1;
-                // Console.WriteLine($"You won {winnings}!");
+                Console.WriteLine($"You won {winnings}!");
 
                 // in the future add to bank balance
                 // for now, add to temporary placeholder
@@ -86,7 +86,7 @@ namespace Cpsc370Final
             }
             else
             {
-                // Console.WriteLine("You lost your bet!");
+                Console.WriteLine("You lost your bet!");
                 return 0.0;
             }
         }
@@ -106,10 +106,10 @@ namespace Cpsc370Final
             bool keepPlaying = true;
             Console.WriteLine("Welcome to the Rocket Game!");
 
-            while (keepPlaying && _player.money > 0)
+            while (keepPlaying && _player.HasMoney())
             {
                 // Prompt for bet
-                Console.WriteLine($"Current Balance: {_player.money}");
+                _player.ShowStatus();
                 Console.Write("Enter bet (or 0 to exit): ");
                 string? betText = Console.ReadLine();
                 if (!double.TryParse(betText, out double bet) || bet < 0)
@@ -147,18 +147,11 @@ namespace Cpsc370Final
 
                 // Generate rocket outcome, show result
                 GenerateOutcome();
-                double roundWinnings = DisplayResult();
-                if (roundWinnings > 0)
-                {
-                    Console.WriteLine($"You won {roundWinnings}!");
-                }
-                else
-                {
-                    Console.WriteLine("You lost your bet!");
-                }
+                // double roundWinnings = DisplayResult();
+                DisplayResult();
 
                 // Check if we can keep playing
-                if (_player.money <= 0)
+                if (!_player.HasMoney())
                 {
                     Console.WriteLine("No more funds! Game over!");
                     break;

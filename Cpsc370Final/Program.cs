@@ -27,11 +27,12 @@ class Program
                 case "3":
                     Console.WriteLine("You chose Blackjack!");
                     Blackjack blackjackGame = new Blackjack(gambler);
-                    blackjackGame.TestDeck();
+                    blackjackGame.PlayGame();
                     break;
 
                 case "4":
                     Console.WriteLine("Showing Player Information...");
+                    gambler.ShowStatus();
                     break;
 
                 case "5":

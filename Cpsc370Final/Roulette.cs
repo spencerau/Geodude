@@ -2,8 +2,16 @@ using System;
 
 public class Roulette
 {
-    private Random random = new Random(); // Create a Random object at the class level
-
+    private readonly Random random;
+    private readonly Func<string> readLine;
+    
+    // Constructor allows dependency injection for Random and Console.ReadLine
+    public Roulette(Random random, Func<string> readLine)
+    {
+            this.random = random;
+            this.readLine = readLine;
+    }
+    
     public void StartGame()
     {
         Console.WriteLine("Welcome to Roulette!");
@@ -64,7 +72,7 @@ public class Roulette
         }
         else
         {
-            Console.WriteLine("You guessed incorrectly. Better luck next time!");
+            Console.WriteLine("You guessed incorrectly. Better luck next time!"); // Display current balance
         }
     }
 
@@ -92,11 +100,11 @@ public class Roulette
 
         if (betNumber == randomNumber)
         {
-            Console.WriteLine($"It landed on {betNumber}! You win!"); //Add payout
+            Console.WriteLine($"It landed on {betNumber}! You win!"); // Add payout here
         }
         else
         {
-            Console.WriteLine($"It landed on {randomNumber}. Better luck next time!");
+            Console.WriteLine($"It landed on {randomNumber}. Better luck next time!"); // Display current balance
         }
     }
 }

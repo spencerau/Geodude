@@ -3,15 +3,15 @@ using System;
 public class Roulette
 {
     private readonly Random random;
-    private readonly Func<string> readLine;
-    
-    // Constructor allows dependency injection for Random and Console.ReadLine
-    public Roulette(Random random, Func<string> readLine)
+    private readonly Func<string> readLineFunc;
+
+    // Constructor with injected dependencies
+    public Roulette(Func<string> readLineFunc, Random random = null)
     {
-            this.random = random;
-            this.readLine = readLine;
+        this.readLineFunc = readLineFunc ?? throw new ArgumentNullException(nameof(readLineFunc));
+        this.random = random ?? new Random();
     }
-    
+
     public void StartGame()
     {
         Console.WriteLine("Welcome to Roulette!");
@@ -34,8 +34,7 @@ public class Roulette
     public string GetBetType()
     {
         Console.WriteLine("Would you like to place an Outside or Inside bet? \n (Type 'outside' or 'inside')");
-        string betType = Console.ReadLine();
-        return betType;
+        return readLineFunc(); // Delegate to injected function
     }
 
     public int GetColor()
@@ -43,7 +42,7 @@ public class Roulette
         while (true)
         {
             Console.WriteLine("Please choose a color ('red' or 'black'): ");
-            string colorChoice = Console.ReadLine();
+            string colorChoice = readLineFunc(); // Delegate to injected function
 
             if (colorChoice.ToLower() == "red")
             {
@@ -63,16 +62,16 @@ public class Roulette
     public void PlaceOutsideBet()
     {
         Console.WriteLine("You've chosen an outside bet.");
-        int userColor = GetColor();  // User picks red (0) or black (1)
+        int userColor = GetColor();
         int randomColor = random.Next(0, 2);
 
         if (userColor == randomColor)
         {
-            Console.WriteLine("You guessed correctly!"); // Add payout here
+            Console.WriteLine("You guessed correctly!"); // Add payout logic here
         }
         else
         {
-            Console.WriteLine("You guessed incorrectly. Better luck next time!"); // Display current balance
+            Console.WriteLine("You guessed incorrectly. Better luck next time!");
         }
     }
 
@@ -84,7 +83,7 @@ public class Roulette
         while (betNumber < 0 || betNumber > 36)
         {
             Console.WriteLine("Please choose a number to bet on (0-36): ");
-            string numberBet = Console.ReadLine();
+            string numberBet = readLineFunc(); // Delegate to injected function
 
             if (int.TryParse(numberBet, out betNumber) && betNumber >= 0 && betNumber <= 36)
             {
@@ -100,11 +99,11 @@ public class Roulette
 
         if (betNumber == randomNumber)
         {
-            Console.WriteLine($"It landed on {betNumber}! You win!"); // Add payout here
+            Console.WriteLine($"It landed on {betNumber}! You win!"); // Add payout logic here
         }
         else
         {
-            Console.WriteLine($"It landed on {randomNumber}. Better luck next time!"); // Display current balance
+            Console.WriteLine($"It landed on {randomNumber}. Better luck next time!");
         }
     }
 }

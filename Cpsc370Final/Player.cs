@@ -2,42 +2,25 @@ namespace Cpsc370Final;
 
 public class Player
 {
-    private double money;
-    private Dictionary<EChips, int> chips;
-    private int chipCount;
+    public double money { get; private set; }
 
-    public Player()
+    public Player(double startingMoney)
     {
-        money = 100.00;
-        chips = new Dictionary<EChips, int>();
-        for (int i = 0; i < 5; i++)
-        {
-            chips.Add((EChips)i, 0);
-        }
-        chipCount = CountChips();
+        money = startingMoney;
     }
 
     public void ShowStatus()
     {
-        Console.WriteLine($"You currently have ${money} to gamble or exchange to chips.");
-        Console.WriteLine($"From your chips you have to {chipCount} chips:");
-        foreach (KeyValuePair<EChips, int> entry in chips)
-        {
-            Console.WriteLine($"{entry.Key}: {entry.Value}");
-        }
+        Console.WriteLine($"You currently have ${money} to gamble.");
     }
 
-    public void AddChips(int chip, int multiplier)
+    public void AddMoney(double moneyBet, int multiplier)
     {
+        money += moneyBet * multiplier;
     }
 
-    private int CountChips()
+    public void RemoveMoney(double moneyBet)
     {
-        int currCount = 0;
-        foreach (KeyValuePair<EChips, int> entry in chips)
-        {
-            currCount += entry.Value;
-        }
-        return currCount;
+        money -= moneyBet;
     }
 }

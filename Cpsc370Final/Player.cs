@@ -19,8 +19,14 @@ public class Player
         money += moneyBet * multiplier;
     }
 
-    public void RemoveMoney(double moneyBet)
+    public double RemoveMoney(double moneyBet)
     {
         money -= moneyBet;
+        return moneyBet;
+    }
+
+    public bool HasMoney()
+    {
+        return money > 0.0;
     }
 }

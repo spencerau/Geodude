@@ -4,8 +4,18 @@ namespace Cpsc370Final
 {
     public class RocketGame
     {
-        private Random _random = new Random();
+        private Random _random;
 
+        public RocketGame()
+        {
+            _random = new Random();
+        }
+
+        public RocketGame(Random rand)
+        {
+            _random = rand;
+        }
+        
         // Tracking player's bet and guess
         public double BetAmount { get; private set; }
 

@@ -49,7 +49,16 @@ public class Blackjack
         dealerHand.AddCard(deck.Deal());
         dealerHand.AddCard(deck.Deal());
 
-        // Print the initial hands
+        if (playerHand.GetTotalValue() == 21)
+        { 
+            Console.WriteLine("Player got Blackjack!");
+            player.AddMoney(currentBet, 2);
+        }
+        else if(dealerHand.GetTotalValue() == 21)
+            Console.WriteLine("Dealer got Blackjack!");
+        else
+        {
+            // Print the initial hands
         Console.WriteLine("Player's hand:");
         Console.WriteLine(playerHand);
 
@@ -157,6 +166,7 @@ public class Blackjack
         }
 
         Console.WriteLine(); // Add a blank line for spacing between rounds
+        }
     }
 }
 

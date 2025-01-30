@@ -42,9 +42,6 @@ namespace Cpsc370Final.Tests
                 // Assert
                 var output = stringWriter.ToString();
                 Assert.Contains("Casino Main Menu", output);
-                // You can also assert specific lines, e.g.:
-                // If user entered "1", we expect "You chose Rocket Game!"
-                // If user entered "4", we expect "Showing Player Information..."
                 // For now, we just check that the menu didn't loop infinitely.
             }
             finally

@@ -14,7 +14,7 @@ public class Blackjack
         this.player = player;
     }
 
-    public void TestDeck()
+    public void PlayGame()
 {
     while (true) // Loop for replay functionality
     {
@@ -28,7 +28,7 @@ public class Blackjack
         {
             currentBet = bet;
             player.RemoveMoney(currentBet); // Deduct the bet from player's chips
-            Console.WriteLine("You have bet " + currentBet + " chips.");
+            Console.WriteLine("You have bet $" + currentBet + ".");
         }
         else
         {

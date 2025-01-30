@@ -9,6 +9,10 @@ class Program
         
         // you can delete this if/when you like
         ShowArguments(args);
+        // Call the Blackjack test function
+        Console.WriteLine("\nTesting the Deck:");
+        Blackjack.TestDeck();
+        
     }
 
     // this is just an example of how to get the command

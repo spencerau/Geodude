@@ -5,16 +5,19 @@ class Program
     static void Main(string[] args)
     {
         Player gambler = new Player(100.0);
+        CasinoMainMenu mainMenu = new CasinoMainMenu();
         Console.WriteLine("Welcome to Casino Game!");
         bool exit = false;
         while (!exit)
         {
-            CasinoMainMenu.ShowMenu();
+            mainMenu.ShowMenu();
             string? input = Console.ReadLine();
             switch (input)
             {
                 case "1":
                     Console.WriteLine("You chose Rocket Game!");
+                    RocketGame rocketGame = new RocketGame(gambler);
+                    rocketGame.PlayRocketGame();
                     break;
 
                 case "2":

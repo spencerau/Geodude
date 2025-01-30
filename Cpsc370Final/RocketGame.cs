@@ -5,10 +5,12 @@ namespace Cpsc370Final
     public class RocketGame
     {
         private Random _random;
+        private Player _player;
 
-        public RocketGame()
+        public RocketGame(Player player)
         {
             _random = new Random();
+            _player = player;
         }
 
         public RocketGame(Random rand)
@@ -33,7 +35,7 @@ namespace Cpsc370Final
             BetAmount = bet;
 
             // deduct from temporary balance later remove once we have a Bank class
-            TemporaryBalance -= BetAmount;
+            _player.RemoveMoney(BetAmount);
         }
 
         // lets the player submit guesses before the round starts.
@@ -74,17 +76,17 @@ namespace Cpsc370Final
             {
                 // payoff is 1.1x bet
                 double winnings = BetAmount * 1.1;
-                Console.WriteLine($"You won {winnings}!");
+                // Console.WriteLine($"You won {winnings}!");
 
                 // in the future add to bank balance
                 // for now, add to temporary placeholder
-                TemporaryBalance += winnings;
+                _player.AddMoney(winnings, 1);
 
                 return winnings;
             }
             else
             {
-                Console.WriteLine("You lost your bet!");
+                // Console.WriteLine("You lost your bet!");
                 return 0.0;
             }
         }
@@ -104,10 +106,10 @@ namespace Cpsc370Final
             bool keepPlaying = true;
             Console.WriteLine("Welcome to the Rocket Game!");
 
-            while (keepPlaying && TemporaryBalance > 0)
+            while (keepPlaying && _player.money > 0)
             {
                 // Prompt for bet
-                Console.WriteLine($"Current Balance: {TemporaryBalance}");
+                Console.WriteLine($"Current Balance: {_player.money}");
                 Console.Write("Enter bet (or 0 to exit): ");
                 string? betText = Console.ReadLine();
                 if (!double.TryParse(betText, out double bet) || bet < 0)
@@ -156,7 +158,7 @@ namespace Cpsc370Final
                 }
 
                 // Check if we can keep playing
-                if (TemporaryBalance <= 0)
+                if (_player.money <= 0)
                 {
                     Console.WriteLine("No more funds! Game over!");
                     break;

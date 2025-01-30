@@ -23,6 +23,8 @@ namespace Cpsc370Final
                 {
                     case "1":
                         Console.WriteLine("You chose Rocket Game!");
+                        RocketGame rocketGame = new RocketGame();
+                        rocketGame.PlayRocketGame();
                         break;
 
                     case "2":

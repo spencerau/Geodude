@@ -110,7 +110,7 @@ namespace Cpsc370Final
                         else if (guess == "not go")
                         {
                             // Player chooses to cash out
-                            _player.AddMoney(BetAmount);
+                            _player.AddMoney(BetAmount, 1);
                             Console.WriteLine($"You cashed out with {BetAmount}!");
                             break; // Exit the inner loop
                         }

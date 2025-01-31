@@ -27,7 +27,11 @@ public class Hand
                 aceCount++;
                 value = 11; // Initially count Ace as 11
             }
-            else if (value > 10) value = 10; // Face cards (Jack, Queen, King) are worth 10
+            else if (value > 10)  // Face cards (Jack, Queen, King) are worth 10 
+            {
+                value = 10;
+                card.SetValue(10);
+            }
 
             totalValue += value;
         }
@@ -41,10 +45,20 @@ public class Hand
 
         return totalValue;
     }
-
+    
     public Card GetCard(int index)
     {
         return cards[index];
+    }
+
+    public bool HasBlackJack()
+    {
+        return GetTotalValue() == 21;
+    }
+
+    public bool CanDoubleDown()
+    {
+        return GetTotalValue() == 9 || GetTotalValue() == 10 || GetTotalValue() == 11;
     }
 
     public override string ToString()
@@ -52,7 +66,7 @@ public class Hand
         string hand = "";
         foreach (Card card in cards)
         {
-            hand += card + " ";
+            hand += card + ", ";
         }
         return hand;
     }

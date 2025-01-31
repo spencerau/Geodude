@@ -1,24 +1,25 @@
 using System;
 using Cpsc370Final;
 
-
 public class Roulette
 {
     private Random random = new Random(); // Create a Random object at the class level
-    // need to implement updating money from player
     private int betAmount;
     private Player player;
-    public Roulette(Player player)
+    private readonly Func<string> readLineFunc; // Injected function for reading input
+
+    public Roulette(Player player, Func<string> readLineFunction)
     {
         this.player = player;
+        this.readLineFunc = readLineFunction ?? throw new ArgumentNullException(nameof(readLineFunction));
     }
-    
+
     public void StartGame()
     {
         Console.WriteLine("Welcome to Roulette!");
         Console.WriteLine("How much would you like to bet?");
-        betAmount = int.Parse(Console.ReadLine());
-        
+        betAmount = int.Parse(readLineFunc()); // Use injected function
+
         string betType = GetBetType();
         if (betType.ToLower() == "outside")
         {
@@ -38,8 +39,8 @@ public class Roulette
 
     public string GetBetType()
     {
-        Console.WriteLine("Would you like to place an Outside or Inside bet? \n (Type 'outside' or 'inside')");
-        return readLineFunc(); // Delegate to injected function
+        Console.WriteLine("Would you like to place an Outside or Inside bet? \n(Type 'outside' or 'inside')");
+        return readLineFunc(); // Use injected function
     }
 
     public int GetColor()
@@ -47,15 +48,15 @@ public class Roulette
         while (true)
         {
             Console.WriteLine("Please choose a color ('red' or 'black'): ");
-            string colorChoice = readLineFunc(); // Delegate to injected function
+            string colorChoice = readLineFunc(); // Use injected function
 
             if (colorChoice.ToLower() == "red")
             {
-                return 0;  // Red
+                return 0; // Red
             }
             else if (colorChoice.ToLower() == "black")
             {
-                return 1;  // Black
+                return 1; // Black
             }
             else
             {
@@ -90,7 +91,7 @@ public class Roulette
         while (betNumber < 0 || betNumber > 36)
         {
             Console.WriteLine("Please choose a number to bet on (0-36): ");
-            string numberBet = readLineFunc(); // Delegate to injected function
+            string numberBet = readLineFunc(); // Use injected function
 
             if (int.TryParse(numberBet, out betNumber) && betNumber >= 0 && betNumber <= 36)
             {

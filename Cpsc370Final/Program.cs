@@ -4,13 +4,33 @@ class Program
 {
     static void Main(string[] args)
     {
-        Player gambler = new Player(100.0);
-        CasinoMainMenu mainMenu = new CasinoMainMenu();
-        Console.WriteLine("Welcome to Casino Game!");
+        double startingChips = 100.0;
+
+        if (args.Length > 0 && double.TryParse(args[0], out double parsedChips) && parsedChips > 0)
+        {
+            startingChips = parsedChips;
+        }
+        else if (args.Length > 0)
+        {
+            Console.WriteLine($"Invalid input. Starting with default chips: {startingChips}.");
+        }
+        
+        Player gambler = new Player(startingChips);
+        
+        //CasinoMainMenu mainMenu = new CasinoMainMenu();
         bool exit = false;
+        Console.WriteLine("Welcome to the Casino Game!");
+        gambler.ShowStatus();
         while (!exit)
         {
-            CasinoMainMenu.ShowMenu();
+            // CasinoMainMenu.ShowMenu();
+            Console.WriteLine("\n=== Casino Main Menu ===");
+            Console.WriteLine("1) Rocket Game");
+            Console.WriteLine("2) Roulette");
+            Console.WriteLine("3) Blackjack");
+            Console.WriteLine("4) Player Information");
+            Console.WriteLine("5) Exit");
+            Console.Write("Enter choice: ");
             string? input = Console.ReadLine();
             switch (input)
             {
@@ -22,6 +42,8 @@ class Program
 
                 case "2":
                     Console.WriteLine("You chose Roulette!");
+                    Roulette roulette = new Roulette(gambler);
+                    roulette.StartGame();
                     break;
 
                 case "3":

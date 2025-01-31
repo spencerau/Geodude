@@ -30,10 +30,10 @@ namespace Cpsc370Final
         
         public static void ShowMenu()
         {
-            Console.WriteLine("Welcome to Casino Game!");
+            Console.WriteLine("Welcome to the Casino Game!");
             bool exit = false;
             
-            Player player = new Player(100);
+            //Player player = new Player(100);
             while (!exit)
             {
                 Console.WriteLine("\n=== Casino Main Menu ===");
@@ -48,41 +48,41 @@ namespace Cpsc370Final
                 // etc and implements etc the Game class etc
                 // Game Blackjack, etc
 
-                string? input = Console.ReadLine();
-                switch (input)
-                {
-                    case "1":
-                        Console.WriteLine("You chose Rocket Game!");
-                        RocketGame rocketGame = new RocketGame(player);
-                        rocketGame.PlayRocketGame();
-                        break;
-
-                    case "2":
-                        Console.WriteLine("You chose Roulette!");
-                        Roulette roulette = new Roulette(player);
-                        roulette.StartGame();
-                        break;
-
-                    case "3":
-                        Console.WriteLine("You chose Blackjack!");
-                        Blackjack blackjack = new Blackjack(player);
-                        blackjack.PlayGame();
-                        break;
-
-                    case "4":
-                        Console.WriteLine("Showing Player Information...");
-                        player.ShowStatus();
-                        break;
-
-                    case "5":
-                        Console.WriteLine("Exiting the Casino...");
-                        exit = true;
-                        break;
-
-                    default:
-                        Console.WriteLine("Invalid choice. Try again.");
-                        break;
-                }
+                // string? input = Console.ReadLine();
+                // switch (input)
+                // {
+                //     case "1":
+                //         Console.WriteLine("You chose Rocket Game!");
+                //         RocketGame rocketGame = new RocketGame(player);
+                //         rocketGame.PlayRocketGame();
+                //         break;
+                //
+                //     case "2":
+                //         Console.WriteLine("You chose Roulette!");
+                //         Roulette roulette = new Roulette(player);
+                //         roulette.StartGame();
+                //         break;
+                //
+                //     case "3":
+                //         Console.WriteLine("You chose Blackjack!");
+                //         Blackjack blackjack = new Blackjack(player);
+                //         blackjack.PlayGame();
+                //         break;
+                //
+                //     case "4":
+                //         Console.WriteLine("Showing Player Information...");
+                //         player.ShowStatus();
+                //         break;
+                //
+                //     case "5":
+                //         Console.WriteLine("Exiting the Casino...");
+                //         exit = true;
+                //         break;
+                //
+                //     default:
+                //         Console.WriteLine("Invalid choice. Try again.");
+                //         break;
+                // }
             }
         }
     }

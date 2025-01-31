@@ -1,39 +1,38 @@
-using System;
-
 namespace Cpsc370Final
 {
     public class RocketGame
     {
         private Random _random;
+        private Player _player;
 
-        public RocketGame()
+        public RocketGame(Player player)
         {
             _random = new Random();
+            _player = player;
         }
 
-        public RocketGame(Random rand)
+        public RocketGame(Player player, Random rand)
         {
             _random = rand;
+            _player = player;
         }
 
         // Tracking player's bet
+        public double TemporaryBalance = 1000.0;
         public double BetAmount { get; set; }
 
         public bool Outcome { get; set; }        // true = rocket safe, false = rocket fails
 
-        // TEMPORARY until we have a Player or Bank class
-        public double TemporaryBalance { get; set; } = 1000.0; // example starting balance
-
         // Place a bet
         public void PlaceBet(double bet)
         {
-            if (bet > TemporaryBalance)
+            if (!_player.HasMoney())
             {
                 Console.WriteLine("You don't have enough balance to place that bet.");
                 throw new InvalidOperationException("Insufficient balance.");
             }
             BetAmount = bet;
-            TemporaryBalance -= BetAmount;
+            _player.RemoveMoney(BetAmount);
         }
 
         // Randomly determines the outcome for the round with a 90% chance of survival
@@ -50,26 +49,28 @@ namespace Cpsc370Final
             Outcome = false;
         }
 
-        // PlayRocketGame: This method runs the "loop" logic
+        /// <summary>
+        /// PlayRocketGame: This method runs the "loop" logic, allowing the player to keep playing.
+        /// </summary>
         public void PlayRocketGame()
         {
             Console.WriteLine("Welcome to the Rocket Game!");
 
-            while (TemporaryBalance > 0)
+            while (_player.HasMoney())
             {
                 // Prompt for initial bet
-                Console.WriteLine($"\nCurrent Balance: {TemporaryBalance}");
+                _player.ShowStatus();
                 Console.Write("Enter bet (or 0 to exit): ");
                 string? betText = Console.ReadLine();
-                if (!double.TryParse(betText, out double bet) || bet < 0)
+                if (!double.TryParse(betText, out double bet) || bet <= 0)
                 {
+                    if (bet == 0)
+                    {
+                        Console.WriteLine("Exiting Rocket Game...");
+                        break;
+                    }
                     Console.WriteLine("Invalid bet.");
                     continue;
-                }
-                if (bet == 0)
-                {
-                    Console.WriteLine("Exiting Rocket Game...");
-                    break;
                 }
                 try
                 {
@@ -110,7 +111,8 @@ namespace Cpsc370Final
                         else if (guess == "not go")
                         {
                             // Player chooses to cash out
-                            TemporaryBalance += BetAmount;
+                            _player.AddMoney(BetAmount, 1);
+
                             Console.WriteLine($"You cashed out with {BetAmount}!");
                             break; // Exit the inner loop
                         }
@@ -129,7 +131,7 @@ namespace Cpsc370Final
                 }
 
                 // Check if the player has funds to keep playing
-                if (TemporaryBalance <= 0)
+                if (!_player.HasMoney())
                 {
                     Console.WriteLine("No more funds! Game over!");
                     break;

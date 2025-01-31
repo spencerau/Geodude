@@ -11,7 +11,8 @@ namespace Cpsc370Final.Tests
         {
             // Arrange
             var random = new Random(0); // Seeded random for consistent results
-            var game = new RocketGame(random);
+            var player = new Player(1000);
+            var game = new RocketGame(player, random);
             double initialBalance = game.TemporaryBalance;
             double betAmount = 100;
 

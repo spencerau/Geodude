@@ -18,6 +18,7 @@ namespace Cpsc370Final
         }
 
         // Tracking player's bet
+        public double TemporaryBalance = 1000.0;
         public double BetAmount { get; set; }
 
         public bool Outcome { get; set; }        // true = rocket safe, false = rocket fails
@@ -25,7 +26,7 @@ namespace Cpsc370Final
         // Place a bet
         public void PlaceBet(double bet)
         {
-            if (!_player.HasEnoughMoney(bet))
+            if (!_player.HasMoney())
             {
                 Console.WriteLine("You don't have enough balance to place that bet.");
                 throw new InvalidOperationException("Insufficient balance.");

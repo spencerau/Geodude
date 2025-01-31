@@ -1,4 +1,5 @@
 using System;
+using Cpsc370Final;
 using Xunit;
 
 public class RouletteTests
@@ -49,7 +50,7 @@ public class RouletteTests
     {
         int betNumber = 7;
         int randomNumber = 7; // Fixed for this test
-        var roulette = new Roulette(SimulateInput(betNumber.ToString()), new RandomSeedMock(randomNumber));
+        var roulette = new Roulette(new Player(500),SimulateInput(betNumber.ToString()), new RandomSeedMock(randomNumber));
 
         // Ideally, modify Roulette class to capture the output here
         roulette.PlaceInsideBet();
@@ -61,7 +62,7 @@ public class RouletteTests
     {
         int betNumber = 7;
         int randomNumber = 5;
-        var roulette = new Roulette(SimulateInput(betNumber.ToString()), new RandomSeedMock(randomNumber));
+        var roulette = new Roulette(new Player(500),SimulateInput(betNumber.ToString()), new RandomSeedMock(randomNumber));
 
         // Ideally, modify Roulette class to capture the output here
         roulette.PlaceInsideBet();
@@ -73,7 +74,7 @@ public class RouletteTests
     {
         int userColor = 0; // Red
         int randomColor = 0; // Red (we want this to match)
-        var roulette = new Roulette(SimulateInput("red"), new RandomSeedMock(randomColor));
+        var roulette = new Roulette(new Player(500),SimulateInput("red"), new RandomSeedMock(randomColor));
 
         // / Ideally, modify Roulette class to capture the output here
         roulette.PlaceOutsideBet();
@@ -86,7 +87,7 @@ public class RouletteTests
         // Arrange
         int userColor = 0; // Red
         int randomColor = 1; // Black
-        var roulette = new Roulette(SimulateInput("red"), new RandomSeedMock(randomColor));
+        var roulette = new Roulette(new Player(500),SimulateInput("red"), new RandomSeedMock(randomColor));
 
         // Ideally, modify Roulette class to capture the output here
         roulette.PlaceOutsideBet();

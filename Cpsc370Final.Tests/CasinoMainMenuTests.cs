@@ -37,7 +37,7 @@ namespace Cpsc370Final.Tests
                 Console.SetOut(stringWriter);
 
                 // Act
-                CasinoMainMenu.ShowMenu();
+                menu.ShowMenu();
 
                 // Assert
                 var output = stringWriter.ToString();

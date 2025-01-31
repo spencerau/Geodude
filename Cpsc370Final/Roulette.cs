@@ -8,10 +8,23 @@ public class Roulette
     private Player player;
     private readonly Func<string> readLineFunc; // Injected function for reading input
 
+    public Roulette(Func<string> readLineFunction)
+    {
+        this.player = new Player(500);
+        this.readLineFunc = readLineFunction ?? throw new ArgumentNullException(nameof(readLineFunction), "Input function cannot be null.");
+    }
+    
     public Roulette(Player player, Func<string> readLineFunction)
     {
         this.player = player;
         this.readLineFunc = readLineFunction ?? throw new ArgumentNullException(nameof(readLineFunction));
+    }
+
+    public Roulette(Player player, Func<string> readLineFunction, Random random)
+    {
+        this.player = player ?? throw new ArgumentNullException(nameof(player));
+        this.readLineFunc = readLineFunction ?? throw new ArgumentNullException(nameof(readLineFunction));
+        this.random = random ?? throw new ArgumentNullException(nameof(random)); // Injected random
     }
 
     public void StartGame()

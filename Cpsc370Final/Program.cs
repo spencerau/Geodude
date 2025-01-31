@@ -10,7 +10,7 @@ class Program
         bool exit = false;
         while (!exit)
         {
-            mainMenu.ShowMenu();
+            CasinoMainMenu.ShowMenu();
             string? input = Console.ReadLine();
             switch (input)
             {

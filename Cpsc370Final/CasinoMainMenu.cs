@@ -4,17 +4,7 @@ namespace Cpsc370Final
 {
     public class CasinoMainMenu
     {
-<<<<<<< Updated upstream
-        public static void ShowMenu()
-        {
-            Console.WriteLine("\n=== Casino Main Menu ===");
-            Console.WriteLine("1) Rocket Game");
-            Console.WriteLine("2) Roulette");
-            Console.WriteLine("3) Blackjack");
-            Console.WriteLine("4) Player Information");
-            Console.WriteLine("5) Exit");
-            Console.Write("Enter choice: ");
-=======
+        // this function is deprecated
         private static int GetInitialChips()
         {
             int numChips;
@@ -43,7 +33,7 @@ namespace Cpsc370Final
             Console.WriteLine("Welcome to Casino Game!");
             bool exit = false;
             
-            Player player = new Player(GetInitialChips());
+            Player player = new Player(100);
             while (!exit)
             {
                 Console.WriteLine("\n=== Casino Main Menu ===");
@@ -54,8 +44,8 @@ namespace Cpsc370Final
                 Console.WriteLine("5) Exit");
                 Console.Write("Enter choice: ");
                 
-                // should we switch this to be an interface or generic so a class like Game that RocketGame, BLackjack, etc
-                // implements etc the Game class etc
+                // should we switch this to be an interface or generic so a class like Game that RocketGame, BLackjack,
+                // etc and implements etc the Game class etc
                 // Game Blackjack, etc
 
                 string? input = Console.ReadLine();
@@ -63,21 +53,20 @@ namespace Cpsc370Final
                 {
                     case "1":
                         Console.WriteLine("You chose Rocket Game!");
-                        RocketGame rocketGame = new RocketGame();
+                        RocketGame rocketGame = new RocketGame(player);
                         rocketGame.PlayRocketGame();
                         break;
 
                     case "2":
                         Console.WriteLine("You chose Roulette!");
-                        Roulette roulette = new Roulette();
+                        Roulette roulette = new Roulette(player);
                         roulette.StartGame();
                         break;
 
                     case "3":
                         Console.WriteLine("You chose Blackjack!");
-                        Blackjack blackjack = new Blackjack();
-                        //@TODO implement this function
-                        //blackjack.StartGame();
+                        Blackjack blackjack = new Blackjack(player);
+                        blackjack.PlayGame();
                         break;
 
                     case "4":
@@ -95,7 +84,6 @@ namespace Cpsc370Final
                         break;
                 }
             }
->>>>>>> Stashed changes
         }
     }
 }

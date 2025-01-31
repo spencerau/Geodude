@@ -35,7 +35,8 @@ class Program
 
                 case "2":
                     Console.WriteLine("You chose Roulette!");
-                    Roulette roulette = new Roulette(gambler);
+                    //Roulette roulette = new Roulette(gambler);
+                    Roulette roulette = new Roulette(gambler, Console.ReadLine);
                     roulette.StartGame();
                     break;
 

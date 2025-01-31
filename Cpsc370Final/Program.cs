@@ -22,6 +22,8 @@ class Program
 
                 case "2":
                     Console.WriteLine("You chose Roulette!");
+                    Roulette rouletteGame = new Roulette(gambler);
+                    rouletteGame.StartGame();
                     break;
 
                 case "3":

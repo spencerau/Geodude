@@ -1,12 +1,24 @@
 using System;
+using Cpsc370Final;
+
 
 public class Roulette
 {
     private Random random = new Random(); // Create a Random object at the class level
-
+    // need to implement updating money from player
+    private int betAmount;
+    private Player player;
+    public Roulette(Player player)
+    {
+        this.player = player;
+    }
+    
     public void StartGame()
     {
         Console.WriteLine("Welcome to Roulette!");
+        Console.WriteLine("How much would you like to bet?");
+        betAmount = int.Parse(Console.ReadLine());
+        
         string betType = GetBetType();
         if (betType.ToLower() == "outside")
         {
@@ -21,6 +33,7 @@ public class Roulette
             Console.WriteLine("Invalid bet type");
             StartGame();
         }
+        player.ShowStatus();
     }
 
     public string GetBetType()
@@ -60,11 +73,13 @@ public class Roulette
 
         if (userColor == randomColor)
         {
-            Console.WriteLine("You guessed correctly!"); // Add payout here
+            Console.WriteLine("You guessed correctly!");
+            player.AddMoney(betAmount, 1);
         }
         else
         {
             Console.WriteLine("You guessed incorrectly. Better luck next time!");
+            player.RemoveMoney(betAmount);
         }
     }
 
@@ -92,11 +107,13 @@ public class Roulette
 
         if (betNumber == randomNumber)
         {
-            Console.WriteLine($"It landed on {betNumber}! You win!"); //Add payout
+            Console.WriteLine($"It landed on {betNumber}! You win!");
+            player.AddMoney(betAmount, 35);
         }
         else
         {
             Console.WriteLine($"It landed on {randomNumber}. Better luck next time!");
+            player.RemoveMoney(betAmount);
         }
     }
 }
